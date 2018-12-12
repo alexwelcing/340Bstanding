@@ -10,7 +10,7 @@ jQuery(function(){
 function loadAjax(file){
     current = file;
     jQuery.ajax({
-        url: "http://survey.paradisetechsoft.com/uploads/json/"+file,
+        url: "https://life-sciences.herokuapp.com/uploads/json/"+file,
 		type: 'GET',
 		dataType: "json",
 		data: [],
