@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+
+    
+    <link rel="stylesheet" href="css/1115materialdesign.css">
+<link href="css/340b.css" rel="stylesheet" />
+<link href="css/introjs.css" rel="stylesheet" />
+<link href="http://survey.paradisetechsoft.com/340/map/jsmaps/jsmaps.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Account</title>
+  </head>
+  <body>
+  
+<main>
+
+<div class="container">
+<div class="sec_outr ">
+	<div class="desprective-content state-content">
+    <div class="top-section">
+    <h4>
+        340B 50 State Survey
+    </h4>
+    <span class="date">Date:13.11.2018</span>
+    <a href=""><i class="fa fa-download"></i> Download Attachment</a>
+    </div>
+  
+       <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries<p>
+	   
+       <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries<p>
+	   
+	   
+    
+   </div>
+				<div class="header">
+					<div class="outr_states">
+						<select id="states" data-step="1" data-intro="Select state"></select>
+						<div class="icons-box"> <a class="intro-c" href="javascript:void(0);" onclick="javascript:startTour();"><i class="fa fa-info-circle" style="color: #24ae5f;"></i></a>
+							
+							<span  data-step="3" data-intro="Click to show hide map" class="my_toggle"><i class="fa fa-globe"></i></span>
+						</div>     
+					</div>
+					<div class="map_sectn">
+						<div class="jsmaps-wrapper-box"><div data-step="2" data-intro="Click on state" class="jsmaps-wrapper" id="usaTerritories-map"></div></div>
+					</div>
+				</div>
+				
+				<div class="material_outr">
+					<div id="state_data"></div>
+				</div>
+			</div>
+			</div>
+
+</main>
+
+
+   
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="http://survey.paradisetechsoft.com/340/js/intro.js"></script>
+<script src="http://survey.paradisetechsoft.com/telehealth/js/jquery.js"></script>
+<script src="http://survey.paradisetechsoft.com/340/map/jsmaps/jsmaps-libs.js" type="text/javascript"></script>
+<script src="http://survey.paradisetechsoft.com/340/map/jsmaps/jsmaps-panzoom.js"></script>
+<script src="http://survey.paradisetechsoft.com/340/map/jsmaps/jsmaps.min.js" type="text/javascript"></script>
+<script src="http://survey.paradisetechsoft.com/uploads/js/usaTerritories.js" type="text/javascript"></script>
+<script src="js/states1.js" type="text/javascript"></script>
+
+
+<script>		
+var value,introJ='',step=false;
+
+//map-->
+jQuery('#usaTerritories-map').JSMaps({
+	map: 'usaTerritories',
+	mapWidth: 800, 
+	mapHeight: 600,
+	stateClickAction : "none",
+	onStateClick : function(res) {
+		if(step){
+            introJ.goToStep(3).start().previousStep();
+            step=false;
+		}
+		checkJson(res.name);
+		//parent.setiframe();
+
+
+		var abbri = res.abbreviation;
+	//dataLayer.push({'event': 'Click Map Event'});
+         // dataLayer.push({'event': 'Timer Event'});
+ var dataLayer = window.dataLayer = window.dataLayer || [];
+ dataLayer.push({'event': 'ClickonMap'});
+               ({'event': '5Sec Event'}); 
+               ({'event':'Track UserID','userID': '2'});
+
+	}
+});
+
+//map toggle
+
+jQuery(document).on('change', '#states', function(){
+	var val = jQuery(this).val();
+	checkJson(val);
+	//parent.setiframe();
+});
+
+jQuery('body').on('click', 'a[href*="#"]', function(e) {
+	jQuery('.active_source').removeClass('active_source');
+	var stck = jQuery(this).attr('href');
+	jQuery(stck).addClass('active_source');
+	
+	
+});
+
+//maptoggle
+jQuery(document).ready(function(){
+    
+    //intro js start for first time
+        if(!readCookie('introjs')){
+            startTour();
+              //create cookies
+              createCookie('introjs', $.now(), '365');
+        }
+
+	jQuery(".my_toggle").click(function(){
+	
+		jQuery('.jsmaps-wrapper-box').toggle("slow");
+		jQuery("#state_data").hide();
+	});
+	
+});
+
+//intro
+function startTour() {
+	introJ = introJs().onchange(function(targetElement) {
+        switch(jQuery(targetElement).attr("data-step")) {
+            case "2":
+            step = true;
+            jQuery(".jsmaps-wrapper-box").show();
+            break;
+		}
+	}).start();
+}
+
+
+// Cookies
+      function createCookie(name, value, days) {
+    if(readCookie('introjs')){
+        return;
+	}
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        var expires = "; expires=" + date.toGMTString();
+	}
+    else var expires = "";               
+	
+    document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+	}
+    return null;
+}
+</script>
+
+
+
+
+  </body>
+</html>
